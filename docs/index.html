@@ -178,12 +178,15 @@
     <div class="eyebrow">Data Report · ML Internship Capstone · August 2026</div>
     <h1>Which Page Should You Refresh First?</h1>
     <p class="abstract">
-      Not every declining page deserves equal attention, so I built and tested a way to rank
-      them. Using 30,000 anonymized content pages, I first built a transparent staleness ×
-      visibility rule, then tested whether Logistic Regression and Random Forest could beat it
-      on the same held-out, client-grouped split. Both did — precision@500 rose from 0.34
-      (baseline) to 0.58 (Random Forest) against a 0.51 base rate. The headline result is for
-      any content team deciding where to spend limited editorial time first.
+      FlyRank's own product already triages content with hand-written rules — a composite
+      health score and flags like "needs refresh" or "quick win" — because not every declining
+      page deserves equal editorial attention. This report asks whether that same decision can
+      be made more honestly with data: using 30,000 anonymized content pages, I first built a
+      transparent staleness × visibility rule in the same spirit as FlyRank's existing flags,
+      then tested whether Logistic Regression and Random Forest could beat it on the same
+      held-out, client-grouped split. Both did — precision@500 rose from 0.34 (baseline) to 0.58
+      (Random Forest) against a 0.51 base rate. The result is a validated, ranked queue for any
+      content team deciding where to spend limited editorial time first.
     </p>
     <div class="meta-row">
       <span>30,000 pages</span>
@@ -203,6 +206,16 @@
       A content team can't refresh every page at once. Some pages are quietly losing search
       visibility; others just look busy. The decision that matters is ordering: which pages
       should a human look at <em>this week</em>?
+    </p>
+    <p>
+      FlyRank already answers a version of this inside its own product: a hand-tuned composite
+      health score and workflow flags (<code>needs refresh</code>, <code>quick win</code>,
+      <code>zombie page</code>) surface triage cues today. Those rules were written by hand and
+      have never been benchmarked against a validated, data-driven alternative on the same
+      pages. That's the case study this report runs: build a transparent baseline in the same
+      spirit as FlyRank's own flags, then test whether a properly validated model actually beats
+      it — on the same data, the same split, the same metric — rather than assuming a fitted
+      model automatically wins.
     </p>
     <p>
       This report treats that as a ranking problem, not a classification verdict. The unit of
@@ -378,8 +391,8 @@ work/notebooks/capstone.ipynb</pre>
     <span class="section-num">09</span>
     <h2>Acknowledgments &amp; Data Credit</h2>
     <p>
-      Built as part of an ML internship program. Methodology questions in the full report were
-      developed in dialogue with FlyRank's own
+      Built on the FlyRank ML Internship dataset — <a href="https://flyrank.ai">flyrank.ai</a>.
+      Methodology questions in this report were developed in dialogue with FlyRank's own
       <em>"The State of AI-Driven SEO"</em> (March 2026) research paper, whose portfolio-level
       findings on content age, freshness, and word count this work independently corroborates.
       Dataset: anonymized/pseudonymized starter export, not FlyRank production data.
