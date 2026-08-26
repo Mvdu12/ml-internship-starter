@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which Page Should You Refresh First? A Grouped-Validation Study of Content Decline</title>
+<meta name="description" content="A transparent baseline, a validated model, and an honest limitations section for prioritizing which content pages to refresh first.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #16202b;
+    --ink-soft: #4a5768;
+    --paper: #f7f5f0;
+    --card: #ffffff;
+    --line: #e2ddd1;
+    --accent: #1d4ed8;
+    --accent-soft: #eef2ff;
+    --confirmed: #0f766e;
+    --opposite: #b45309;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 840px; margin: 0 auto; padding: 0 24px; }
+  header.hero {
+    border-bottom: 1px solid var(--line);
+    padding: 72px 0 48px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    line-height: 1.12;
+    margin: 0 0 22px;
+    letter-spacing: -0.01em;
+  }
+  .abstract {
+    font-size: 1.08rem;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+  .meta-row span {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 12px;
+    background: var(--card);
+  }
+  main { padding: 8px 0 40px; }
+  section { padding: 44px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 6px;
+  }
+  h3 { font-size: 1.05rem; margin: 28px 0 10px; }
+  p { margin: 0 0 16px; }
+  .lede { font-size: 1.05rem; color: var(--ink-soft); }
+  ul, ol { padding-left: 1.3em; margin: 0 0 16px; }
+  li { margin-bottom: 8px; }
+  code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--accent-soft);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  figure { margin: 24px 0; }
+  figure img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    display: block;
+  }
+  figcaption {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin-top: 10px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 0.92rem;
+  }
+  th, td {
+    text-align: left;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  th { font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); }
+  td.num, th.num { text-align: right; font-family: var(--mono); }
+  .callout {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 18px 0;
+    font-size: 0.96rem;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .tag.confirmed { background: #ecfdf5; color: var(--confirmed); }
+  .tag.opposite { background: #fffbeb; color: var(--opposite); }
+  .findings-grid { display: grid; gap: 14px; margin: 18px 0; }
+  .finding-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .finding-card h4 { margin: 6px 0 6px; font-size: 0.98rem; }
+  .finding-card p { margin: 0; font-size: 0.92rem; color: var(--ink-soft); }
+  .repro pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 16px 18px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  footer {
+    padding: 36px 0 60px;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  footer a { color: var(--accent); }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Data Report · ML Internship Capstone · August 2026</div>
+    <h1>Which Page Should You Refresh First?</h1>
+    <p class="abstract">
+      Not every declining page deserves equal attention, so I built and tested a way to rank
+      them. Using 30,000 anonymized content pages, I first built a transparent staleness ×
+      visibility rule, then tested whether Logistic Regression and Random Forest could beat it
+      on the same held-out, client-grouped split. Both did — precision@500 rose from 0.34
+      (baseline) to 0.58 (Random Forest) against a 0.51 base rate. The headline result is for
+      any content team deciding where to spend limited editorial time first.
+    </p>
+    <div class="meta-row">
+      <span>30,000 pages</span>
+      <span>Grouped by client_id</span>
+      <span>Precision@K vs baseline</span>
+      <span><a href="https://github.com/Mvdu12/ml-internship-starter" style="color:inherit;">Repo ↗</a></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="problem">
+    <span class="section-num">01</span>
+    <h2>The Problem</h2>
+    <p class="lede">
+      A content team can't refresh every page at once. Some pages are quietly losing search
+      visibility; others just look busy. The decision that matters is ordering: which pages
+      should a human look at <em>this week</em>?
+    </p>
+    <p>
+      This report treats that as a ranking problem, not a classification verdict. The unit of
+      analysis is one page. The output is a ranked queue with a probability, a priority tier,
+      and a plain-language reason — reviewed by a person, never auto-published. A wrong call in
+      either direction is recoverable: reviewing a healthy page wastes time, missing a declining
+      one lets it keep slipping unnoticed. That's exactly the profile where a prioritization
+      tool earns its keep over a hard automated rule.
+    </p>
+  </section>
+
+  <section id="data">
+    <span class="section-num">02</span>
+    <h2>The Data</h2>
+    <p>
+      30,000 pages, one 90-day trailing performance snapshot: search impressions, clicks,
+      sessions, engagement, position, plus structural fields (word count, age, freshness) and
+      keyword economics (search volume, competition, CPC). <code>content_id</code> and
+      <code>client_id</code> are pseudonymous hashes.
+    </p>
+    <p>
+      <strong>Deliberately excluded:</strong> <code>trend_direction</code> and
+      <code>trend_pct</code> — these <em>define</em> the label used throughout this report, so
+      they're audited against, never fed in as features. Also excluded: bucketed tier columns
+      (duplicates of numeric fields already used directly) and production metadata
+      (<code>provider_used</code>, <code>model_used</code>) that describes how a page was made,
+      not whether it's declining.
+    </p>
+  </section>
+
+  <section id="signals">
+    <span class="section-num">03</span>
+    <h2>Testing the Assumptions First</h2>
+    <p class="lede">
+      Before building anything, I tested the signals a rule would lean on — rather than assuming
+      they held.
+    </p>
+    <div class="findings-grid">
+      <div class="finding-card">
+        <span class="tag confirmed">Confirmed</span>
+        <h4>Staleness predicts decline</h4>
+        <p>
+          Pages untouched for 91-180 days decline at 61.1% vs 51.1% for pages updated in the
+          last 30 days — directional, not deterministic, and it holds on the two buckets with
+          real sample size (n=9,171 and n=20,480).
+        </p>
+      </div>
+      <div class="finding-card">
+        <span class="tag opposite">Opposite</span>
+        <h4>"Long content underperforms"</h4>
+        <p>
+          My own early-week hypothesis tested backwards: 3,500+ word pages average 82 sessions
+          vs 2 for sub-1,000-word pages. Word count was dropped from every rule and model built
+          for this report as a direct result — a negative result that saved the work from a
+          false lever.
+        </p>
+      </div>
+    </div>
+    <figure>
+      <img src="img/position_ctr.png" alt="Bar chart: average CTR falls from top-3 position tier down to deep position tier">
+      <figcaption>A third, cleaner signal: CTR tracks position tier almost exactly — useful confirmation that the underlying data behaves as expected.</figcaption>
+    </figure>
+  </section>
+
+  <section id="method">
+    <span class="section-num">04</span>
+    <h2>Method</h2>
+    <h3>Baseline</h3>
+    <p>
+      A transparent, unfitted rule: <code>freshness_risk_percentile × visibility_percentile</code>,
+      built only from <code>days_since_last_update</code> and <code>impressions_90d</code>. No
+      training, fully readable — the number every model here has to beat, on the exact same
+      rows, label, and metric.
+    </p>
+    <h3>Model</h3>
+    <p>
+      Logistic Regression, then Random Forest, predicting
+      <code>is_declining_label = (trend_direction == 'down')</code> — an observed-label
+      classification problem, scored the same way as the baseline: precision@K.
+    </p>
+    <h3>Validation design</h3>
+    <p>
+      Split by <code>client_id</code>, not by row. Pages from the same client share house style
+      and audience, so a random split lets a model partly memorize <em>which client this is</em>
+      instead of learning decline risk. This wasn't a small effect:
+    </p>
+    <figure>
+      <img src="img/split_gap.png" alt="Line chart: precision at K under random split (higher, inflated) vs grouped split (lower, honest)">
+      <figcaption>The same Random Forest scores 0.83 precision@500 under a random row-level split vs 0.58 under a client-grouped split — the gap is memorization, not skill. Every result below uses the grouped number.</figcaption>
+    </figure>
+    <h3>Leakage check</h3>
+    <p>
+      Re-adding <code>trend_pct</code> as a feature collapses/inflates the honest AUC of 0.54 to
+      1.000 — confirming the label-derived columns are the only thing capable of producing a
+      suspiciously perfect score, and confirming they're fully excluded from the model above.
+    </p>
+  </section>
+
+  <section id="results">
+    <span class="section-num">05</span>
+    <h2>Results</h2>
+    <p>Same grouped test split, same label, same metric, for all three methods:</p>
+    <table>
+      <thead>
+        <tr><th>K</th><th class="num">Baseline</th><th class="num">Logistic Regression</th><th class="num">Random Forest</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>50</td><td class="num">0.340</td><td class="num">0.480</td><td class="num">0.480</td></tr>
+        <tr><td>200</td><td class="num">0.350</td><td class="num">0.510</td><td class="num">0.525</td></tr>
+        <tr><td>500</td><td class="num">0.344</td><td class="num">0.542</td><td class="num">0.584</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.88rem; color:var(--ink-soft);">Test-set base rate: 0.511 (n=6,163 pages, held out by client).</p>
+    <figure>
+      <img src="img/precision_at_k.png" alt="Bar chart comparing precision at K=50,200,500 for baseline, logistic regression, and random forest, with a base-rate reference line">
+      <figcaption>Both models clear the base rate and the baseline at every K. The baseline actually sits <em>below</em> the base rate — it was built to find stale-and-visible pages, not specifically declining ones, and those turn out to be mildly anti-correlated with decline in this portfolio.</figcaption>
+    </figure>
+    <h3>Where the model is wrong</h3>
+    <p>
+      False positives cluster right on the trend boundary — pages with a trend_pct near ±20%,
+      the cutoff between "down" and "stable," that the model reads as at-risk a step early.
+      False negatives are pages with almost no visibility (1-2 impressions in 90 days) — too
+      little signal for any method to work with. Both error types are explainable, not noise.
+    </p>
+  </section>
+
+  <section id="limitations">
+    <span class="section-num">06</span>
+    <h2>Limitations</h2>
+    <ul>
+      <li><strong>No causal claim.</strong> This is cross-sectional, observational data. "Declining pages tend to be stale and visible" is an association, not proof that refreshing a page prevents decline.</li>
+      <li><strong>Not a search-algorithm model.</strong> The label reflects this portfolio's own impression trend, not Google's ranking mechanics.</li>
+      <li><strong>Tested on known clients only.</strong> The grouped split proves the model generalizes to unseen <em>pages</em> from clients like these — not to a genuinely new client with a different content style.</li>
+      <li><strong>Precision, not certainty.</strong> 0.48-0.58 precision@K means roughly 4-6 of every 10 flagged pages are genuinely declining — a prioritization signal, not a per-row verdict.</li>
+      <li><strong>Feature importance is descriptive, not causal</strong> — the same caveat the source research paper applies to its own Random Forest appendix, where the "predictors" turned out to be literal components of the label being predicted.</li>
+    </ul>
+  </section>
+
+  <section id="recommendations">
+    <span class="section-num">07</span>
+    <h2>Recommendations</h2>
+    <p>
+      The full ranked queue lives in the repo at
+      <code>work/outputs/action_playbook_queue.csv</code>. Every <code>refresh_now</code> row
+      should clear a short human-review checklist before anyone acts on it: confirm the trend
+      isn't already improving, confirm the page isn't already scheduled for a redesign, and
+      confirm the position isn't so deep (50+) that a content refresh alone won't move it. None
+      of this should be automated past the ranking step — no auto-publishing, no automated
+      de-indexing or billing decisions from a score alone.
+    </p>
+    <div class="callout">
+      <strong>Monitoring trigger:</strong> re-check if the portfolio's decline base rate drifts
+      more than ~5 points from 0.511, if a fresh spot-check shows precision@500 meaningfully
+      below 0.58, or on a quarterly backstop regardless — whichever comes first.
+    </div>
+  </section>
+
+  <section id="repro" class="repro">
+    <span class="section-num">08</span>
+    <h2>Reproducibility</h2>
+    <p>Every notebook pulls the starter CSV directly from this repo's raw GitHub URL — no local file setup needed. Run in order:</p>
+    <pre>work/notebooks/w03_feature_leakage_check.ipynb
+work/notebooks/w04_signal_audit.ipynb
+work/notebooks/w04_baseline_score.ipynb
+work/notebooks/w05_model.ipynb
+work/notebooks/w06_validation_audit.ipynb
+work/notebooks/w07_action_playbook.ipynb
+work/notebooks/capstone.ipynb</pre>
+    <p>Seed: <code>random_state=42</code> everywhere a split or model is fit. Environment: see <code>requirements.txt</code> at the repo root.</p>
+  </section>
+
+  <section id="credit">
+    <span class="section-num">09</span>
+    <h2>Acknowledgments &amp; Data Credit</h2>
+    <p>
+      Built as part of an ML internship program. Methodology questions in the full report were
+      developed in dialogue with FlyRank's own
+      <em>"The State of AI-Driven SEO"</em> (March 2026) research paper, whose portfolio-level
+      findings on content age, freshness, and word count this work independently corroborates.
+      Dataset: anonymized/pseudonymized starter export, not FlyRank production data.
+    </p>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p>
+    Full methodology, code, and the capstone report:
+    <a href="https://github.com/Mvdu12/ml-internship-starter">github.com/Mvdu12/ml-internship-starter</a>
+  </p>
+</footer>
+
+</body>
+</html>
